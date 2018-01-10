@@ -3,7 +3,7 @@ package com.example.demo;
 /**
  * Created by Adil Imam on 8/12/2017.
  */
-public class LostItemJDBC {
+public class LostItem {
     private int id;
     private String name;
     private String description;
@@ -13,11 +13,11 @@ public class LostItemJDBC {
     private String owner_name;
     private String owner_phone;
 
-    public LostItemJDBC(){
+    public LostItem(){
 
     }
 
-    public LostItemJDBC(String name, String description, String lost_location, Double reward_price, String picture, String owner, String phone) {
+    public LostItem(String name, String description, String lost_location, Double reward_price, String picture, String owner, String phone) {
         this.name = name;
         this.description = description;
         this.lost_location = lost_location;

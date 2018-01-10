@@ -15,12 +15,12 @@ import java.sql.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+@CrossOrigin(origins = "http://54.91.15.90", maxAge = 3600)
 @RestController
 public class LostAndFoundController {
    //This is going to be the best application
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
-    private static String imagePath="";
     private ConnectJDBC JDBCconnect=new ConnectJDBC();
     private Statement stmt = null;
     private Connection conn=null;
@@ -33,8 +33,8 @@ public class LostAndFoundController {
     }
 
     @RequestMapping("/retrievelost")
-    public List<LostItemJDBC> test(){
-        List<LostItemJDBC> lostReports= new ArrayList<>();
+    public List<LostItem> test(){
+        List<LostItem> lostReports= new ArrayList<>();
         try{
             conn=ConnectJDBC.getConnection();
             stmt = conn.createStatement();
@@ -51,7 +51,7 @@ public class LostAndFoundController {
                 String owner_name=rs.getString("owner_name");
                 String owner_phone=rs.getString("owner_phone");
 
-                LostItemJDBC lost=new LostItemJDBC(name, description, lost_location, reward_price,
+                LostItem lost=new LostItem(name, description, lost_location, reward_price,
                         picture, owner_name, owner_phone);
                 lost.setId(id);
                 lostReports.add(lost);
@@ -81,8 +81,8 @@ public class LostAndFoundController {
 
 
     @RequestMapping("/retrievefound")
-    public List<FoundItemJDBC> getFoundItems(){
-        List<FoundItemJDBC> foundReports= new ArrayList<>();
+    public List<FoundItem> getFoundItems(){
+        List<FoundItem> foundReports= new ArrayList<>();
         try{
             conn=ConnectJDBC.getConnection();
             stmt = conn.createStatement();
@@ -97,21 +97,7 @@ public class LostAndFoundController {
                 String itemName=rs.getString("name");
                 String lostLocation=rs.getString("lost_location");
 
-                System.out.println(rs.getString("finder_name"));
-                System.out.println(rs.getString("finder_phone"));
-                System.out.println(rs.getString("finder_email"));
-                System.out.println(itemName);
-                System.out.println(lostLocation);
-
-                FoundItemJDBC found=new FoundItemJDBC();
-                found.setFinderEmail(finderEmail);
-                found.setFinderName(finderName);
-                found.setFinderPhone(finderPhone);
-                found.setItemName(itemName);
-                found.setLostLocation(lostLocation);
-                found.setId(id);
-                found.setPicture(picture);
-
+                FoundItem found=new FoundItem(id, finderName, finderPhone, finderEmail, itemName, lostLocation, picture);
                 foundReports.add(found);
             }
             rs.close();
@@ -120,7 +106,7 @@ public class LostAndFoundController {
             se.printStackTrace();
         }
 
-        for(FoundItemJDBC found:foundReports){
+        for(FoundItem found:foundReports){
             System.out.println("Final death "+found);
         }
         return foundReports;
@@ -133,7 +119,7 @@ public class LostAndFoundController {
         Collection<String> values=json.values();
         Object[] valuesArray=values.toArray();
 
-        LostItemJDBC lost=new LostItemJDBC(valuesArray[0].toString(),valuesArray[1].toString(),
+        LostItem lost=new LostItem(valuesArray[0].toString(),valuesArray[1].toString(),
                 valuesArray[2].toString(),Double.parseDouble(valuesArray[3].toString()),valuesArray[4].toString(),
                 valuesArray[5].toString(),valuesArray[6].toString());
 
