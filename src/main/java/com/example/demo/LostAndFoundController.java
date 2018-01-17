@@ -18,7 +18,6 @@ import org.json.JSONObject;
 @CrossOrigin(origins = "http://54.91.15.90", maxAge = 3600)
 @RestController
 public class LostAndFoundController {
-   //This is going to be the best application
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     private ConnectJDBC JDBCconnect=new ConnectJDBC();
@@ -38,7 +37,6 @@ public class LostAndFoundController {
         try{
             conn=ConnectJDBC.getConnection();
             stmt = conn.createStatement();
-            //  String sql = "SELECT * FROM Lost_Items LIMIT "+startIndex+", 10";
             String sql = "SELECT * FROM Lost_Items";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
