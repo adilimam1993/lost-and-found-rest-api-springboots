@@ -2,9 +2,6 @@ package com.example.demo;
 /**
  * Created by Adil Imam on 7/1/2017.
  */
-/*
- If its a fucking maven project, please place your config files in under resources folder. Lesson Learned
-*/
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.sql.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@CrossOrigin(origins = "http://54.91.15.90", maxAge = 3600)
+//@CrossOrigin(origins = "http://54.91.15.90", maxAge = 3600)
 @RestController
 public class LostAndFoundController {
     private static final String template = "Hello, %s!";
@@ -104,9 +101,6 @@ public class LostAndFoundController {
             se.printStackTrace();
         }
 
-        for(FoundItem found:foundReports){
-            System.out.println("Final death "+found);
-        }
         return foundReports;
     }
 
@@ -171,20 +165,5 @@ public class LostAndFoundController {
         return new Greeting(counter.incrementAndGet(),
                 "");
     }
-/*
-    @RequestMapping(value="/upload", method=RequestMethod.POST)  //new annotation since 4.3
-    public Greeting singleFileUpload(@RequestBody MultipartFile file){
-        //Upload the file to s3
 
-        if (!file.isEmpty()) {
-            try {
-                imagePath=UploadS3.uploadImageToS3(file);
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-        }
-        return new Greeting(counter.incrementAndGet(),imagePath);
-    }
-*/
 }
